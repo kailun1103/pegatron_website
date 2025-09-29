@@ -5,7 +5,19 @@ const morgan = require('morgan');
 const cors = require('cors');
 const { Pool } = require('pg');
 
+const multer = require('multer');
+const streamifier = require('streamifier');
+const cloudinary = require('cloudinary').v2;
+
 const app = express();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,   // ⬅️ 放到 .env，不要硬寫在程式裡
+  api_key:    process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 /* ------------------------------- 基本中介層 ------------------------------- */
 app.use(cors({
@@ -161,6 +173,36 @@ app.get('/api/users/:id', async (req, res) => {
     res.json(rows[0]);
   } catch (e) {
     console.error('[GET /api/users/:id] error:', e);
+    res.status(500).json({ error: { code: 'INTERNAL', message: e.message } });
+  }
+});
+
+/* ------------------------------- 圖片上傳(Cloudinary) ------------------------------- */
+// POST /api/upload  (multipart/form-data, field: "file")
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) return badRequest(res, '請附上檔案(file)');
+
+    const folder = 'user_avatars'; // Cloudinary 資料夾，可自訂
+    const options = { folder, resource_type: 'image' };
+
+    const stream = cloudinary.uploader.upload_stream(options, (err, result) => {
+      if (err) {
+        console.error('[Cloudinary upload error]', err);
+        return res.status(500).json({ error: { code: 'UPLOAD_FAILED', message: '上傳失敗' } });
+      }
+      // 回傳給前端
+      return res.json({
+        url: result.secure_url,
+        public_id: result.public_id,
+        width: result.width,
+        height: result.height,
+      });
+    });
+
+    streamifier.createReadStream(req.file.buffer).pipe(stream);
+  } catch (e) {
+    console.error('[POST /api/upload] error:', e);
     res.status(500).json({ error: { code: 'INTERNAL', message: e.message } });
   }
 });
