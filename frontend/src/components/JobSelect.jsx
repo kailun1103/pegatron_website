@@ -1,9 +1,9 @@
 const JOBS = [
   { value: '', label: 'All' },
-  { value: 'Student', label: 'Student' },
-  { value: 'Engineer', label: 'Engineer' },
-  { value: 'Teacher', label: 'Teacher' },
-  { value: 'Homeless', label: 'Homeless' },
+  { value: 'student', label: 'student' },
+  { value: 'egineer', label: 'egineer' },
+  { value: 'teacher', label: 'teacher' },
+  { value: 'homeless', label: 'homeless' },
 ]
 
 export default function JobSelect({ value, onChange }) {

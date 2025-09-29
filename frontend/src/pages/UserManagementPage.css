@@ -1,0 +1,328 @@
+/* 深色主題 CSS，保留 HTML 結構與 Bootstrap class 不變 */
+
+/* 主背景與文字 */
+body, html, #root {
+  background: #121212;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* 容器間距 */
+.container.py-4 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+/* 頁面標題 */
+h3.mb-0 {
+  font-weight: 700;
+  font-size: 2.25rem;
+  color: #f0f0f0;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+  transition: color 0.3s ease;
+}
+
+/* 按鈕群組 */
+.btn-group .btn {
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  background: #2c2c2c;
+  color: #ddd;
+  border: 1px solid #444;
+}
+
+.btn-group .btn.btn-primary {
+  background: linear-gradient(135deg, #4a90e2, #357ABD);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.6);
+}
+
+.btn-group .btn.btn-primary:hover {
+  background: linear-gradient(135deg, #357ABD, #4a90e2);
+  box-shadow: 0 6px 16px rgba(74, 144, 226, 0.8);
+}
+
+.btn-group .btn.btn-outline-primary {
+  background: transparent;
+  color: #7aa7e9;
+  border-color: #7aa7e9;
+}
+
+.btn-group .btn.btn-outline-primary:hover {
+  background: #3a3a3a;
+  color: #a3c0ff;
+  border-color: #a3c0ff;
+}
+
+/* small.text-muted.mb-1 文字改善 */
+.small.text-muted.mb-1 {
+  color: #a8bcd1; /* 較淺且柔和的藍灰色 */
+  font-weight: 500;
+}
+
+/* Create User 按鈕重新設計 */
+.btn-success.w-100 {
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #3cb371cc, #2e8b57cc); /* 柔和綠色漸層 */
+  border: none;
+  box-shadow: 0 2px 8px rgba(60, 179, 113, 0.4); /* 降低光影強度 */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  color: #e6ffe6;
+}
+
+.btn-success.w-100:hover {
+  background: linear-gradient(135deg, #2e8b57cc, #3cb371cc);
+  box-shadow: 0 4px 12px rgba(60, 179, 113, 0.6);
+  color: #d4f8d4;
+}
+
+/* 卡片樣式 */
+.card.h-100 {
+  background: #222;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+  cursor: pointer;
+  color: #ddd;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.card.h-100:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.95);
+}
+
+/* 統一圖片尺寸比例 */
+.card-img-top {
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  height: 280px !important;
+  object-fit: cover !important;
+  transition: transform 0.4s ease;
+  filter: brightness(0.85);
+}
+
+.card.h-100:hover .card-img-top {
+  transform: scale(1.07);
+  filter: brightness(1);
+}
+
+/* 卡片標題 */
+.card-title {
+  color: #f5f5f5;
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+/* 卡片文字 */
+.card-body .small.text-muted {
+  color: #a8bcd1; /* 改為較淺且帶點藍調的灰色，提升可讀性 */
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+/* 卡片按鈕 */
+.card-body .btn-primary {
+  background: linear-gradient(135deg, #4a90e2, #357ABD);
+  border: none;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.7);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-body .btn-primary:hover {
+  background: linear-gradient(135deg, #357ABD, #4a90e2);
+  box-shadow: 0 6px 16px rgba(74, 144, 226, 0.9);
+}
+
+.card-body .btn-outline-danger {
+  color: #e57373;
+  border-color: #e57373;
+  background: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card-body .btn-outline-danger:hover {
+  background-color: #b71c1c;
+  color: #fff;
+  border-color: #b71c1c;
+}
+
+/* 表格容器淡入動畫 */
+.table-responsive {
+  animation: fadeInUp 0.6s ease forwards;
+  background: #1e1e1e;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+/* 表格樣式 */
+.table {
+  color: #ddd;
+  border-collapse: separate;
+  border-spacing: 0 0.75rem;
+}
+
+.table thead th {
+  border-bottom: none;
+  color: #000000;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  padding-bottom: 0.5rem;
+}
+
+.table tbody tr {
+  background: #2a2a2a;
+  border-radius: 0.75rem;
+  transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+  background-color: #3a3a3a;
+}
+
+.table tbody tr td {
+  vertical-align: middle;
+  border: none;
+  padding: 0.75rem 1rem;
+}
+
+/* 表格按鈕 */
+.table .btn {
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  transition: background-color 0.3s ease;
+}
+
+.table .btn-primary {
+  background: linear-gradient(135deg, #4a90e2, #357ABD);
+  border: none;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.7);
+  color: #fff;
+}
+
+.table .btn-primary:hover {
+  background: linear-gradient(135deg, #357ABD, #4a90e2);
+  box-shadow: 0 6px 16px rgba(74, 144, 226, 0.9);
+}
+
+.table .btn-outline-danger {
+  color: #e57373;
+  border-color: #e57373;
+  background: transparent;
+}
+
+.table .btn-outline-danger:hover {
+  background-color: #b71c1c;
+  color: #fff;
+  border-color: #b71c1c;
+}
+
+/* 分頁列 */
+.pagination {
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.pagination .page-link {
+  background: #2a2a2a;
+  border: none;
+  color: #ccc;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  background: #4a90e2;
+  color: #fff;
+}
+
+.pagination .page-item.active .page-link {
+  background: linear-gradient(135deg, #4a90e2, #357ABD);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(74, 144, 226, 0.9);
+}
+
+/* 動畫 keyframes */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* 強制覆蓋 Bootstrap .text-muted 顏色為白色 */
+.text-muted {
+  color: #ffffff !important;
+}
+/* 排序欄位與方向的箭頭提示 */
+.sort-select {
+  position: relative;
+  padding-right: 1.5rem;
+  cursor: pointer;
+}
+
+.sort-select option {
+  padding-right: 1.5rem;
+}
+
+/* 使用 data-attribute 來控制箭頭方向 */
+.sort-select[data-order="asc"]::after,
+.sort-select[data-order="desc"]::after {
+  content: '';
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.sort-select[data-order="asc"]::after {
+  border-width: 0.4rem 0.4rem 0 0.4rem;
+  border-color: #4a90e2 transparent transparent transparent;
+}
+
+.sort-select[data-order="desc"]::after {
+  border-width: 0 0.4rem 0.4rem 0.4rem;
+  border-color: transparent transparent #4a90e2 transparent;
+}
+/* 當切換到 table tab 時，容器背景改為深色 */
+.container.table-mode {
+  background-color: #121212;
+  border-radius: 1rem;
+  padding: 1rem;
+.container.table-mode .table-responsive {
+  background-color: #121212 !important;
+}
+}
+.container.table-mode .table.align-middle tbody tr,
+.container.table-mode .table.align-middle tbody tr td {
+  background-color: #2a2a2a !important;
+  color: #ddd;
+}
+.container.table-mode .table.align-middle thead,
+.container.table-mode .table.align-middle thead th {
+  background-color: #2a2a2a !important;
+  color: #ddd;
+}

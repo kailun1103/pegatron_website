@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
 // UsersTable 元件，顯示使用者清單的表格
-export default function UsersTable({ items, onEdit, onDelete }) {
+export default function UsersTable({ items, onEdit, onDelete, onView }) {
   return (
     <div className="table-responsive">
       {/* table-responsive: Bootstrap 讓表格在小螢幕可左右滑動 */}
@@ -30,6 +30,8 @@ export default function UsersTable({ items, onEdit, onDelete }) {
               <td>{u.phone || '-'}</td>
               <td>
                 <div className="d-flex gap-2">
+                  {/* 檢視按鈕，點擊時呼叫 onView 傳入該使用者資料 */}
+                  <button className="btn btn-sm btn-outline-secondary" onClick={() => onView && onView(u)}>View</button>
                   {/* 編輯按鈕，點擊時呼叫 onEdit 傳入該使用者資料 */}
                   <button className="btn btn-sm btn-primary" onClick={() => onEdit(u)}>Edit</button>
                   {/* 刪除按鈕，點擊時呼叫 onDelete 傳入該使用者的 id */}

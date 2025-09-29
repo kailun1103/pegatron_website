@@ -9,13 +9,32 @@ import UserCard from '../components/UserCard'
 import UsersTable from '../components/UsersTable'
 import UserFormModal from '../components/UserFormModal'
 
+import './UserManagementPage.css'
+
+
 export default function UserManagementPage() {
   // 讀取並設定網址查詢參數（用於同步 tab / page / q / job）
   const [sp, setSp] = useSearchParams()
   const tab = sp.get('tab') || 'card' // 'card' | 'table'
   const page = Math.max(parseInt(sp.get('page') || '1', 10), 1)
+// 監聽 URL 變化，輸出變化前後的查詢參數，幫助定位問題
+useEffect(() => {
+  const handlePopState = () => {
+    console.log('URL changed:', window.location.search)
+  }
+  window.addEventListener('popstate', handlePopState)
+  return () => window.removeEventListener('popstate', handlePopState)
+}, [])
   const q = sp.get('q') || ''
   const job = sp.get('job') || ''
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log('Delayed check - current page:', sp.get('page'), 'q:', sp.get('q'))
+    }, 1000)
+    return () => clearTimeout(timer)
+  }, [sp])
 
   // React Query 客戶端（用於快取與失效）
   const qc = useQueryClient()
@@ -57,14 +76,30 @@ export default function UserManagementPage() {
       if (v === '' || v == null) next.delete(k)
       else next.set(k, String(v))
     })
-    setSp(next, { replace: true })
+    // 參數沒有實際變化就不更新，避免重設 page
+    if (next.toString() !== sp.toString()) setSp(next)
   }
 
   // 各種查詢參數變更事件
   const onChangeTab = (nextTab) => setParam({ tab: nextTab })
-  const onPageChange = (p) => setParam({ page: Math.max(1, p) })
-  const onChangeQ = (value) => setParam({ q: value, page: 1 })
-  const onChangeJob = (value) => setParam({ job: value, page: 1 })
+  const [currentPage, setCurrentPage] = useState(page)
+
+  useEffect(() => {
+    setCurrentPage(page)
+  }, [page])
+
+  const onPageChange = (p) => {
+    const newPage = Math.max(1, p)
+    setCurrentPage(newPage)
+    setParam({ page: newPage })
+  }
+  const onChangeQ = (value) => {
+    if (value !== q) setParam({ q: value, page: 1 })
+  }
+
+  const onChangeJob = (value) => {
+    if (value !== job) setParam({ job: value, page: 1 })
+  }
 
   // 送出新增 / 編輯
   const onCreate = async (payload) => { await mCreate.mutateAsync(payload) }
@@ -83,7 +118,7 @@ export default function UserManagementPage() {
   }, [])
 
   return (
-    <div className="container py-4">
+    <div className={`container py-4 ${tab === 'table' ? 'table-mode' : ''}`}>
       {/* 頁面標題與檢視切換（卡片 / 表格） */}
       <div className="d-flex align-items-center justify-content-between mb-3">
         <h3 className="mb-0">User Management</h3>
@@ -142,8 +177,9 @@ export default function UserManagementPage() {
                 <div className="col" key={u.id}>
                   <UserCard
                     user={u}
-                    onEdit={(user) => { setEditing(user); setShowForm(true) }}
+                    onEdit={(user) => { setEditing({ ...user, viewOnly: false }); setShowForm(true); console.log('Edit clicked', user, showForm, editing); }}
                     onDelete={onDelete}
+                    onView={(user) => { setEditing({ ...user, viewOnly: true }); setShowForm(true); console.log('View clicked', user, showForm, editing); }}
                   />
                 </div>
               ))}
@@ -155,8 +191,9 @@ export default function UserManagementPage() {
             // 表格檢視
             <UsersTable
               items={items}
-              onEdit={(user) => { setEditing(user); setShowForm(true) }}
+              onEdit={(user) => { setEditing({ ...user, viewOnly: false }); setShowForm(true) }}
               onDelete={onDelete}
+              onView={(user) => { setEditing({ ...user, viewOnly: true }); setShowForm(true); }}
             />
           )}
 
@@ -171,6 +208,7 @@ export default function UserManagementPage() {
         onClose={() => setShowForm(false)}
         initial={editing}
         onSubmit={editing ? onSaveEdit : onCreate}
+        mode={editing && editing.viewOnly ? 'view' : 'edit'}
       />
     </div>
   )
