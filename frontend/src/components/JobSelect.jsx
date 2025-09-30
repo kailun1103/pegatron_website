@@ -1,7 +1,7 @@
 const JOBS = [
   { value: '', label: 'All' },
   { value: 'student', label: 'student' },
-  { value: 'egineer', label: 'egineer' },
+  { value: 'engineer', label: 'engineer' },
   { value: 'teacher', label: 'teacher' },
   { value: 'homeless', label: 'homeless' },
 ]

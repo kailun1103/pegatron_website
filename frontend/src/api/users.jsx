@@ -1,20 +1,17 @@
 import { api } from './client'
 
-export const fetchUsers = async ({ page=1, limit=6, q='', job='' }) => {
-  const { data } = await api.get('/api/users', { params: { page, limit, q, job } })
-  return data
+export const fetchUsers = ({ page=1, limit=6, q='', job='' }) => {
+  return api.get('/api/users', { params: { page, limit, q, job } })
 }
 
-export const createUser = async (payload) => {
-  const { data } = await api.post('/api/users', payload)
-  return data
+export const createUser = (payload) => {
+  return api.post('/api/users', payload)
 }
 
-export const updateUser = async (id, payload) => {
-  const { data } = await api.put(`/api/users/${id}`, payload)
-  return data
+export const updateUser = (id, payload) => {
+  return api.put(`/api/users/${id}`, payload)
 }
 
-export const deleteUser = async (id) => {
-  await api.delete(`/api/users/${id}`)
+export const deleteUser = (id) => {
+  return api.delete(`/api/users/${id}`)
 }

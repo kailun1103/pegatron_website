@@ -7,7 +7,7 @@ export const api = axios.create({
 })
 
 api.interceptors.response.use( // 回應攔截器
-  (res) => res, // 呼叫端拿到的是Axios的完整response物件(含 data, status, headers…)
+  (res) => res.data, // 呼叫端拿到的是Axios的完整response物件(含 data, status, headers…)
   (err) => { // 把錯誤包成一個拒絕的Promise往外拋，讓呼叫端的.catch()接到
     return Promise.reject(err)
   }
